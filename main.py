@@ -81,6 +81,9 @@ class Burbuja:
         self.activa = False
         self.canvas.delete(self.circulo)
 
+    def explotar(self):
+        self.desactivar()
+
 
 class Marcador:
     def __init__(self, canvas):
@@ -151,7 +154,9 @@ class Cazaburbujas:
     def detectar_colisiones(self):
         colisiones = 0
         for burbuja in self.burbujas:
-            if colision(self.submarino, burbuja):
+            if burbuja.activa and colision(self.submarino, burbuja):
+                burbuja.explotar()
+
                 print("Burbuja explotada")
                 colisiones += 1
         return colisiones
