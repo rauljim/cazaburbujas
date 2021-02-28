@@ -78,15 +78,16 @@ class Marcador:
     def __init__(self, canvas):
         self.canvas = canvas
         self.puntos = 0
-        self.tiempo_restante = 30
+        self.tiempo_fin = time() + 30
         canvas.create_text(50, 30, text="TIEMPO", fill="white")
         canvas.create_text(150, 30, text="PUNTOS", fill="white")
         self.texto_tiempo = canvas.create_text(50, 50, fill="white")
         self.texto_puntos = canvas.create_text(150, 50, fill="white")
-        self.actualizar_marcador()
+        self.actualizar()
 
-    def actualizar_marcador(self):
-        self.canvas.itemconfig(self.texto_tiempo, text=str(self.tiempo_restante))
+    def actualizar(self):
+        tiempo_restante = self.tiempo_fin - time()
+        self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
         self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
 
 
@@ -126,6 +127,7 @@ class Cazaburbujas:
             self.crear_burbuja()
         self.mover_burbujas()
         self.limpiar_burbujas()
+        self.marcador.actualizar()
 
 ventana = Tk()
 ventana.title(TITULO)
