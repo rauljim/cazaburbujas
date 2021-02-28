@@ -144,12 +144,17 @@ class Cazaburbujas:
             self.crear_burbuja()
         self.mover_burbujas()
         self.limpiar_burbujas()
-        self.detectar_colisiones()
+        colisiones = self.detectar_colisiones()
+        self.marcador.puntos += colisiones
+        self.marcador.tiempo_fin += 10 * colisiones
 
     def detectar_colisiones(self):
+        colisiones = 0
         for burbuja in self.burbujas:
             if colision(self.submarino, burbuja):
                 print("Burbuja explotada")
+                colisiones += 1
+        return colisiones
 
 ventana = Tk()
 ventana.title(TITULO)
