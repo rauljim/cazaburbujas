@@ -1,6 +1,7 @@
 from tkinter import Tk, Canvas
 from random import randint
 from time import sleep, time
+from math import sqrt
 
 CANVAS_ANCHURA = 800
 CANVAS_ALTURA = 500
@@ -24,6 +25,11 @@ MARGEN = MAX_BURBUJA_RADIO
 BURBUJA_X_INICIAL = CANVAS_ANCHURA + MARGEN
 
 
+def colision(objeto1, objeto2):
+    distancia = sqrt((objeto2.x - objeto1.x)**2 + (objeto2.y - objeto1.y)**2)
+    return distancia < objeto1.radio + objeto2.radio
+
+
 class Submarino:
     def __init__(self, canvas):
         self.canvas = canvas
@@ -31,6 +37,7 @@ class Submarino:
         self.circulo = canvas.create_oval(0, 0, 30, 30, outline=BURBUJA_COLOR)
         self.x = CENTRO_X
         self.y = CENTRO_Y
+        self.radio = SUBMARINO_RADIO
         self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
         self.canvas.moveto(self.circulo, self.x, self.y)
 
@@ -74,6 +81,7 @@ class Burbuja:
         self.activa = False
         self.canvas.delete(self.circulo)
 
+
 class Marcador:
     def __init__(self, canvas):
         self.canvas = canvas
@@ -100,7 +108,7 @@ class Marcador:
 class Cazaburbujas:
     def __init__(self, canvas):
         self.marcador = Marcador(canvas)
-        self.barco = Submarino(canvas)
+        self.submarino = Submarino(canvas)
         self.burbujas = list()
         self.num_burbujas = 0
                                                                                   
@@ -120,13 +128,13 @@ class Cazaburbujas:
 
     def reaccionar_a_tecla_pulsada(self, evento):
         if evento.keysym == 'Up':
-            self.barco.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
+            self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
-            self.barco.mover_en_canvas(0, SUBMARINO_DISTANCIA_PASO)
+            self.submarino.mover_en_canvas(0, SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Left':
-            self.barco.mover_en_canvas(-SUBMARINO_DISTANCIA_PASO, 0)
+            self.submarino.mover_en_canvas(-SUBMARINO_DISTANCIA_PASO, 0)
         elif evento.keysym == 'Right':
-            self.barco.mover_en_canvas(SUBMARINO_DISTANCIA_PASO, 0)
+            self.submarino.mover_en_canvas(SUBMARINO_DISTANCIA_PASO, 0)
 
     def siguiente_paso(self):
         self.marcador.actualizar()
@@ -136,7 +144,12 @@ class Cazaburbujas:
             self.crear_burbuja()
         self.mover_burbujas()
         self.limpiar_burbujas()
+        self.detectar_colisiones()
 
+    def detectar_colisiones(self):
+        for burbuja in self.burbujas:
+            if colision(self.submarino, burbuja):
+                print("Burbuja explotada")
 
 ventana = Tk()
 ventana.title(TITULO)
