@@ -22,7 +22,7 @@ MARGEN = MAX_BURBUJA_RADIO
 
 BURBUJA_X_INICIAL = ANCHURA + MARGEN
 
-class Barco:
+class Submarino:
     def __init__(self, canvas):
         self.canvas = canvas
         self.triangulo = canvas.create_polygon(5, 5, 5, 25, 30, 15, fill=BARCO_COLOR)
@@ -67,7 +67,7 @@ class Burbuja:
 
 class Cazaburbujas:
     def __init__(self, canvas):
-        self.barco = Barco(canvas)
+        self.barco = Submarino(canvas)
         self.barco.mover_en_canvas(CENTRO_X, CENTRO_Y)
         self.burbujas = list()
         self.num_burbujas = 0
