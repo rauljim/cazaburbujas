@@ -29,6 +29,10 @@ class Submarino:
         self.circulo = canvas.create_oval(0, 0, 30, 30, outline=BURBUJA_COLOR)
 
     def mover_en_canvas(self, x, y):
+
+        pos = self.canvas.coords(self.circulo)
+        x_min, x_max, y_min, y_max = pos
+
         self.canvas.move(self.triangulo, x, y)
         self.canvas.move(self.circulo, x, y)
 
