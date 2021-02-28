@@ -35,6 +35,7 @@ class Barco:
 
 class Burbuja:
     def __init__(self, canvas, id):
+        print('creando', id)
         self.canvas = canvas
         self.id = id
         x = BURBUJA_X_INICIAL
@@ -50,7 +51,7 @@ class Burbuja:
         self.canvas.move(self.circulo, -self.velocidad, 0)
         x, y = self.coordenadas()
         if x < 0:
-            self.borrar()
+            self.desactivar()
 
     def coordenadas(self):
         pos = self.canvas.coords(self.circulo)
@@ -59,7 +60,7 @@ class Burbuja:
         y = (y_min + y_max) / 2
         return x, y
 
-    def borrar(self):
+    def desactivar(self):
         print('desactivando', self.id)
         self.activa = False
         self.canvas.delete(self.circulo)
@@ -85,7 +86,7 @@ class Cazaburbujas:
             print('borrando', self.burbujas[0].id)
             del self.burbujas[0]
 
-    def evento_callback(self, evento):
+    def reaccionar_a_tecla_pulsada(self, evento):
         if evento.keysym == 'Up':
             self.barco.mover_en_canvas(0, -BARCO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
@@ -107,7 +108,7 @@ canvas = Canvas(ventana, width=ANCHURA, heigh=ALTURA, bg=FONDO)
 canvas.pack()
 
 cazaburbujas = Cazaburbujas(canvas)
-canvas.bind_all("<Key>", cazaburbujas.evento_callback)
+canvas.bind_all("<Key>", cazaburbujas.reaccionar_a_tecla_pulsada)
 
 while True:
     cazaburbujas.siguiente_paso()
