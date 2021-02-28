@@ -74,12 +74,29 @@ class Burbuja:
         self.activa = False
         self.canvas.delete(self.circulo)
 
+class Marcador:
+    def __init__(self, canvas):
+        self.canvas = canvas
+        self.puntos = 0
+        self.tiempo_restante = 30
+        canvas.create_text(50, 30, text="TIEMPO", fill="white")
+        canvas.create_text(150, 30, text="PUNTOS", fill="white")
+        self.texto_tiempo = canvas.create_text(50, 50, fill="white")
+        self.texto_puntos = canvas.create_text(150, 50, fill="white")
+        self.actualizar_marcador()
+
+    def actualizar_marcador(self):
+        self.canvas.itemconfig(self.texto_tiempo, text=str(self.tiempo_restante))
+        self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
+
+
 class Cazaburbujas:
     def __init__(self, canvas):
+        self.marcador = Marcador(canvas)
         self.barco = Submarino(canvas)
         self.burbujas = list()
         self.num_burbujas = 0
-
+                                                                                  
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(canvas, self.num_burbujas)
         self.num_burbujas += 1
