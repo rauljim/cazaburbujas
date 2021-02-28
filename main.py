@@ -87,8 +87,14 @@ class Marcador:
 
     def actualizar(self):
         tiempo_restante = self.tiempo_fin - time()
+        if tiempo_restante < 0:
+            self.canvas.itemconfig(self.texto_puntos, text="HAS PERDIDO")
+            return
         self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
         self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
+
+    def tiempo_agotado(self):
+        return time() > self.tiempo_fin
 
 
 class Cazaburbujas:
@@ -123,11 +129,14 @@ class Cazaburbujas:
             self.barco.mover_en_canvas(SUBMARINO_DISTANCIA_PASO, 0)
 
     def siguiente_paso(self):
+        self.marcador.actualizar()
+        if self.marcador.tiempo_agotado():
+            return
         if randint(1, BURBUJA_PROBABILIDAD) == 1:
             self.crear_burbuja()
         self.mover_burbujas()
         self.limpiar_burbujas()
-        self.marcador.actualizar()
+
 
 ventana = Tk()
 ventana.title(TITULO)
