@@ -2,35 +2,48 @@ from tkinter import Tk, Canvas
 from random import randint
 from time import sleep, time
 
-ALTURA = 500
-ANCHURA = 800
+CANVAS_ANCHURA = 800
+CANVAS_ALTURA = 500
 TITULO = "Cazaburbujas"
 FONDO = 'darkblue'
-BARCO_RADIO = 15
-BARCO_COLOR = 'red'
-CENTRO_X = ANCHURA / 2
-CENTRO_Y = ALTURA / 2
-BARCO_DISTANCIA_PASO = 10
+SUBMARINO_RADIO = 15
+SUBMARINO_COLOR = 'red'
+CENTRO_X = CANVAS_ANCHURA / 2
+CENTRO_Y = CANVAS_ALTURA / 2
+SUBMARINO_DISTANCIA_PASO = 10
+SUBMARINO_AJUSTE_TRIANGULO = 5
 
 MIN_BURBUJA_RADIO = 10
 MAX_BURBUJA_RADIO = 30
 MAX_BURBUJA_VELOCIDAD = 10
 BURBUJA_COLOR = 'white'
-BURBUJA_PROBABILIDAD = 60
+BURBUJA_PROBABILIDAD = 30
 
 MARGEN = MAX_BURBUJA_RADIO
 
-BURBUJA_X_INICIAL = ANCHURA + MARGEN
+BURBUJA_X_INICIAL = CANVAS_ANCHURA + MARGEN
+
 
 class Submarino:
     def __init__(self, canvas):
         self.canvas = canvas
-        self.triangulo = canvas.create_polygon(5, 5, 5, 25, 30, 15, fill=BARCO_COLOR)
+        self.triangulo = canvas.create_polygon(5, 5, 5, 25, 30, 15, fill=SUBMARINO_COLOR)
         self.circulo = canvas.create_oval(0, 0, 30, 30, outline=BURBUJA_COLOR)
+        self.x = CENTRO_X
+        self.y = CENTRO_Y
+        self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
+        self.canvas.moveto(self.circulo, self.x, self.y)
 
-    def mover_en_canvas(self, x, y):
-        self.canvas.move(self.triangulo, x, y)
-        self.canvas.move(self.circulo, x, y)
+    def mover_en_canvas(self, movimiento_en_x, movimiento_en_y):
+        x_modificada = self.x + movimiento_en_x
+        y_modificada = self.y + movimiento_en_y
+        if x_modificada >= 0 and x_modificada <= CANVAS_ANCHURA - SUBMARINO_RADIO * 2:
+            self.x = x_modificada
+        if y_modificada >= 0 and y_modificada <= CANVAS_ALTURA - SUBMARINO_RADIO * 2:
+            self.y = y_modificada
+
+        self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
+        self.canvas.moveto(self.circulo, self.x, self.y)
 
 
 class Burbuja:
@@ -38,27 +51,23 @@ class Burbuja:
         print('creando', id)
         self.canvas = canvas
         self.id = id
-        x = BURBUJA_X_INICIAL
-        y = randint(0, ALTURA)
+        self.x = BURBUJA_X_INICIAL
+        self.y = randint(0, CANVAS_ALTURA)
         self.radio = randint(MIN_BURBUJA_RADIO, MAX_BURBUJA_RADIO)
-        self.circulo = canvas.create_oval(x - self.radio, y - self.radio, x + self.radio, y + self.radio, outline=BURBUJA_COLOR)
+        self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
+                                          self.x + self.radio, self.y + self.radio,
+                                          outline=BURBUJA_COLOR)
         self.velocidad = randint(1, MAX_BURBUJA_VELOCIDAD)
         self.activa = True
 
     def mover(self):
         if not self.activa:
             return
-        self.canvas.move(self.circulo, -self.velocidad, 0)
-        x, y = self.coordenadas()
-        if x < 0:
+        self.x -= self.velocidad
+        self.canvas.moveto(self.circulo, self.x, self.y)
+        if self.x < 0 - MAX_BURBUJA_RADIO * 2:
+            # Burbujas se desactivan cuando se salen completamente de la pantalla
             self.desactivar()
-
-    def coordenadas(self):
-        pos = self.canvas.coords(self.circulo)
-        x_min, x_max, y_min, y_max = pos
-        x = (x_min + x_max) / 2
-        y = (y_min + y_max) / 2
-        return x, y
 
     def desactivar(self):
         print('desactivando', self.id)
@@ -68,7 +77,6 @@ class Burbuja:
 class Cazaburbujas:
     def __init__(self, canvas):
         self.barco = Submarino(canvas)
-        self.barco.mover_en_canvas(CENTRO_X, CENTRO_Y)
         self.burbujas = list()
         self.num_burbujas = 0
 
@@ -88,13 +96,13 @@ class Cazaburbujas:
 
     def reaccionar_a_tecla_pulsada(self, evento):
         if evento.keysym == 'Up':
-            self.barco.mover_en_canvas(0, -BARCO_DISTANCIA_PASO)
+            self.barco.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
-            self.barco.mover_en_canvas(0, BARCO_DISTANCIA_PASO)
+            self.barco.mover_en_canvas(0, SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Left':
-            self.barco.mover_en_canvas(-BARCO_DISTANCIA_PASO, 0)
+            self.barco.mover_en_canvas(-SUBMARINO_DISTANCIA_PASO, 0)
         elif evento.keysym == 'Right':
-            self.barco.mover_en_canvas(BARCO_DISTANCIA_PASO, 0)
+            self.barco.mover_en_canvas(SUBMARINO_DISTANCIA_PASO, 0)
 
     def siguiente_paso(self):
         if randint(1, BURBUJA_PROBABILIDAD) == 1:
@@ -104,7 +112,7 @@ class Cazaburbujas:
 
 ventana = Tk()
 ventana.title(TITULO)
-canvas = Canvas(ventana, width=ANCHURA, heigh=ALTURA, bg=FONDO)
+canvas = Canvas(ventana, width=CANVAS_ANCHURA, heigh=CANVAS_ALTURA, bg=FONDO)
 canvas.pack()
 
 cazaburbujas = Cazaburbujas(canvas)
