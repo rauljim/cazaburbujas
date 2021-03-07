@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="71aff01b-c838-44ac-b7a4-57f3e1a2e9c5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/burbuja.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/configuracion.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/marcador.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/submarino.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -11,6 +15,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="añadir_torpedos" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1p6QgAKyPmDOtxM4WrAE9I1nclG" />
@@ -62,5 +71,16 @@
       <updated>1614501175276</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
