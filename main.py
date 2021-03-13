@@ -7,6 +7,7 @@ from burbuja import Burbuja, BURBUJA_PROBABILIDAD
 from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA, TITULO, FONDO
 from marcador import Marcador
 from submarino import Submarino, SUBMARINO_DISTANCIA_PASO
+from torpedo import Torpedo
 
 
 def colision(objeto1, objeto2):
@@ -20,6 +21,7 @@ class Cazaburbujas:
         self.submarino = Submarino(canvas)
         self.burbujas = list()
         self.num_burbujas = 0
+        self.torpedo = Torpedo(canvas)
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(canvas, self.num_burbujas)
@@ -36,6 +38,8 @@ class Cazaburbujas:
             del self.burbujas[0]
 
     def reaccionar_a_tecla_pulsada(self, evento):
+        if self.marcador.has_perdido():
+            return
         if evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
@@ -47,7 +51,7 @@ class Cazaburbujas:
 
     def siguiente_paso(self):
         self.marcador.actualizar()
-        if self.marcador.tiempo_agotado():
+        if self.marcador.has_perdido():
             return
         if randint(1, BURBUJA_PROBABILIDAD) == 1:
             self.crear_burbuja()
@@ -56,6 +60,15 @@ class Cazaburbujas:
         colisiones = self.detectar_colisiones()
         self.marcador.puntos += colisiones
         self.marcador.tiempo_fin += 10 * colisiones
+        self.torpedo.mover()
+        impacto_detectado = self.detectar_impacto_con_torpedo()
+        if impacto_detectado:
+            print("Submarino tocado")
+            self.torpedo.detonar()
+            self.marcador.registrar_impacto_con_torpedo()
+
+    def detectar_impacto_con_torpedo(self):
+        return self.torpedo.activo and colision(self.submarino, self.torpedo)
 
     def detectar_colisiones(self):
         colisiones = 0
