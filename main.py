@@ -1,111 +1,17 @@
 from tkinter import Tk, Canvas
 from random import randint
-from time import sleep, time
+from time import sleep
 from math import sqrt
 
-CANVAS_ANCHURA = 800
-CANVAS_ALTURA = 500
-TITULO = "Cazaburbujas"
-FONDO = 'darkblue'
-SUBMARINO_RADIO = 15
-SUBMARINO_COLOR = 'red'
-CENTRO_X = CANVAS_ANCHURA / 2
-CENTRO_Y = CANVAS_ALTURA / 2
-SUBMARINO_DISTANCIA_PASO = 10
-SUBMARINO_AJUSTE_TRIANGULO = 5
-
-MIN_BURBUJA_RADIO = 10
-MAX_BURBUJA_RADIO = 30
-MAX_BURBUJA_VELOCIDAD = 10
-BURBUJA_COLOR = 'white'
-BURBUJA_PROBABILIDAD = 30
-
-MARGEN = MAX_BURBUJA_RADIO
-
-BURBUJA_X_INICIAL = CANVAS_ANCHURA + MARGEN
+from burbuja import Burbuja, BURBUJA_PROBABILIDAD
+from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA, TITULO, FONDO
+from marcador import Marcador
+from submarino import Submarino, SUBMARINO_DISTANCIA_PASO
 
 
 def colision(objeto1, objeto2):
-    distancia = sqrt((objeto2.x - objeto1.x)**2 + (objeto2.y - objeto1.y)**2)
+    distancia = sqrt((objeto2.x - objeto1.x) ** 2 + (objeto2.y - objeto1.y) ** 2)
     return distancia < objeto1.radio + objeto2.radio
-
-
-class Submarino:
-    def __init__(self, canvas):
-        self.canvas = canvas
-        self.triangulo = canvas.create_polygon(5, 5, 5, 25, 30, 15, fill=SUBMARINO_COLOR)
-        self.circulo = canvas.create_oval(0, 0, 30, 30, outline=BURBUJA_COLOR)
-        self.x = CENTRO_X
-        self.y = CENTRO_Y
-        self.radio = SUBMARINO_RADIO
-        self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
-        self.canvas.moveto(self.circulo, self.x, self.y)
-
-    def mover_en_canvas(self, movimiento_en_x, movimiento_en_y):
-        x_modificada = self.x + movimiento_en_x
-        y_modificada = self.y + movimiento_en_y
-        if x_modificada >= 0 and x_modificada <= CANVAS_ANCHURA - SUBMARINO_RADIO * 2:
-            self.x = x_modificada
-        if y_modificada >= 0 and y_modificada <= CANVAS_ALTURA - SUBMARINO_RADIO * 2:
-            self.y = y_modificada
-
-        self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
-        self.canvas.moveto(self.circulo, self.x, self.y)
-
-
-class Burbuja:
-    def __init__(self, canvas, id):
-        print('creando', id)
-        self.canvas = canvas
-        self.id = id
-        self.x = BURBUJA_X_INICIAL
-        self.y = randint(0, CANVAS_ALTURA)
-        self.radio = randint(MIN_BURBUJA_RADIO, MAX_BURBUJA_RADIO)
-        self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
-                                          self.x + self.radio, self.y + self.radio,
-                                          outline=BURBUJA_COLOR)
-        self.velocidad = randint(1, MAX_BURBUJA_VELOCIDAD)
-        self.activa = True
-
-    def mover(self):
-        if not self.activa:
-            return
-        self.x -= self.velocidad
-        self.canvas.moveto(self.circulo, self.x, self.y)
-        if self.x < 0 - MAX_BURBUJA_RADIO * 2:
-            # Burbujas se desactivan cuando se salen completamente de la pantalla
-            self.desactivar()
-
-    def desactivar(self):
-        print('desactivando', self.id)
-        self.activa = False
-        self.canvas.delete(self.circulo)
-
-    def explotar(self):
-        self.desactivar()
-
-
-class Marcador:
-    def __init__(self, canvas):
-        self.canvas = canvas
-        self.puntos = 0
-        self.tiempo_fin = time() + 30
-        canvas.create_text(50, 30, text="TIEMPO", fill="white")
-        canvas.create_text(150, 30, text="PUNTOS", fill="white")
-        self.texto_tiempo = canvas.create_text(50, 50, fill="white")
-        self.texto_puntos = canvas.create_text(150, 50, fill="white")
-        self.actualizar()
-
-    def actualizar(self):
-        tiempo_restante = self.tiempo_fin - time()
-        if tiempo_restante < 0:
-            self.canvas.itemconfig(self.texto_puntos, text="HAS PERDIDO")
-            return
-        self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
-        self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
-
-    def tiempo_agotado(self):
-        return time() > self.tiempo_fin
 
 
 class Cazaburbujas:
@@ -114,7 +20,7 @@ class Cazaburbujas:
         self.submarino = Submarino(canvas)
         self.burbujas = list()
         self.num_burbujas = 0
-                                                                                  
+
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(canvas, self.num_burbujas)
         self.num_burbujas += 1
@@ -160,6 +66,7 @@ class Cazaburbujas:
                 print("Burbuja explotada")
                 colisiones += 1
         return colisiones
+
 
 ventana = Tk()
 ventana.title(TITULO)
