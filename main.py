@@ -8,6 +8,7 @@ from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA, TITULO, FONDO
 from marcador import Marcador
 from submarino import Submarino, SUBMARINO_DISTANCIA_PASO
 from torpedo import Torpedo
+from escudo import Escudo
 
 
 def colision(objeto1, objeto2):
@@ -22,6 +23,7 @@ class Cazaburbujas:
         self.burbujas = list()
         self.num_burbujas = 0
         self.torpedo = Torpedo(canvas)
+        self.escudo = Escudo(canvas)
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(canvas, self.num_burbujas)
@@ -62,12 +64,26 @@ class Cazaburbujas:
         self.marcador.tiempo_fin += 10 * colisiones
         self.torpedo.mover()
         impacto_detectado = self.detectar_impacto_con_torpedo()
+        self.escudo.mover()
+        escudo_activado = self.detectar_escudo_activo()
         if impacto_detectado:
             print("Submarino tocado")
             self.torpedo.detonar()
             self.marcador.registrar_impacto_con_torpedo()
-
+            self.escudo.activar()
+        
+    def detectar_escudo_activo(self):
+        num_vidas = 0
+        if self.escudo.activo and colision(self.submarino, self.escudo):
+            self.escudo.activar()
+            
+            print("Escudo activado")
+            num_vidas += 1
+        return num_vidas
+            
+        
     def detectar_impacto_con_torpedo(self):
+
         return self.torpedo.activo and colision(self.submarino, self.torpedo)
 
     def detectar_colisiones(self):

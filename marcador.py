@@ -11,10 +11,13 @@ class Marcador:
         self.puntos = 0
         self.tiempo_fin = time() + 30
         self.hundido = False
+        self.vidas = 0
         canvas.create_text(50, 30, text="TIEMPO", fill="white")
         canvas.create_text(150, 30, text="PUNTOS", fill="white")
+        canvas.create_text(750, 30, text="VIDAS", fill="white")
         self.texto_tiempo = canvas.create_text(50, 50, fill="white")
         self.texto_puntos = canvas.create_text(150, 50, fill="white")
+        self.texto_vidas = canvas.create_text(750, 50, fill="white")
         self.actualizar()
 
     def actualizar(self):
@@ -32,3 +35,7 @@ class Marcador:
 
     def registrar_impacto_con_torpedo(self):
         self.hundido = True
+
+
+
+
