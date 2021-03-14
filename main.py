@@ -62,24 +62,30 @@ class Cazaburbujas:
         colisiones = self.detectar_colisiones()
         self.marcador.puntos += colisiones
         self.marcador.tiempo_fin += 10 * colisiones
+        num_escudos = self.detectar_escudo_activo()
+        self.marcador.escudos += num_escudos
         self.torpedo.mover()
         impacto_detectado = self.detectar_impacto_con_torpedo()
         self.escudo.mover()
-        escudo_activado = self.detectar_escudo_activo()
+
         if impacto_detectado:
             print("Submarino tocado")
             self.torpedo.detonar()
+            self.marcador.escudos -= 2
+
+        if self.marcador.escudos < 0:
             self.marcador.registrar_impacto_con_torpedo()
-            self.escudo.activar()
-        
+
+
+
+
     def detectar_escudo_activo(self):
-        num_vidas = 0
+        num_escudos = 0
         if self.escudo.activo and colision(self.submarino, self.escudo):
             self.escudo.activar()
-            
             print("Escudo activado")
-            num_vidas += 1
-        return num_vidas
+            num_escudos += 1
+        return num_escudos
             
         
     def detectar_impacto_con_torpedo(self):

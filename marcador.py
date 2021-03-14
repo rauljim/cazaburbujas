@@ -11,13 +11,13 @@ class Marcador:
         self.puntos = 0
         self.tiempo_fin = time() + 30
         self.hundido = False
-        self.vidas = 0
+        self.escudos = 0
         canvas.create_text(50, 30, text="TIEMPO", fill="white")
         canvas.create_text(150, 30, text="PUNTOS", fill="white")
-        canvas.create_text(750, 30, text="VIDAS", fill="white")
+        canvas.create_text(750, 30, text="ESCUDOS", fill="white")
         self.texto_tiempo = canvas.create_text(50, 50, fill="white")
         self.texto_puntos = canvas.create_text(150, 50, fill="white")
-        self.texto_vidas = canvas.create_text(750, 50, fill="white")
+        self.texto_escudos = canvas.create_text(750, 50, fill="white")
         self.actualizar()
 
     def actualizar(self):
@@ -29,6 +29,7 @@ class Marcador:
         tiempo_restante = self.tiempo_fin - time()
         self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
         self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
+        self.canvas.itemconfig(self.texto_escudos, text=str(self.escudos))
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido

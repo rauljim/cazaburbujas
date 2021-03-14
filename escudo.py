@@ -1,11 +1,11 @@
 from random import randint
 
-from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA
+from configuracion import CANVAS_ALTURA
 
 ESCUDO_RADIO = 10
-MAX_ESCUDO_VELOCIDAD = 10
+MAX_ESCUDO_VELOCIDAD = 18
 ESCUDO_COLOR = 'green'
-ESCUDO_PROBABILIDAD = 15
+ESCUDO_PROBABILIDAD = 1
 MARGEN = ESCUDO_RADIO
 ESCUDO_Y_INICIAL = CANVAS_ALTURA - MARGEN
 
@@ -20,7 +20,7 @@ class Escudo:
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           fill=ESCUDO_COLOR)
-        self.velocidad = randint(10, MAX_ESCUDO_VELOCIDAD)
+        self.velocidad = randint(14, MAX_ESCUDO_VELOCIDAD)
         self.activo = True
 
     def mover(self):
