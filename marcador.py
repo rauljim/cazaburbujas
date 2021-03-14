@@ -19,13 +19,19 @@ class Marcador:
 
     def actualizar(self):
         if self.has_perdido():
-            FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
-            self.canvas.create_text(configuracion.CENTRO_X, configuracion.CENTRO_Y, text="¡HAS PERDIDO!", fill="white",
-                                    font=FUENTE_TITULO)
+            self.mostrar_has_perdido()
             return
         tiempo_restante = self.tiempo_fin - time()
         self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
         self.canvas.itemconfig(self.texto_puntos, text=str(self.puntos))
+
+
+    def mostrar_has_perdido(self):
+        FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
+        self.canvas.create_text(configuracion.CENTRO_X, configuracion.CENTRO_Y, text="¡HAS PERDIDO!", fill="white",
+                                font=FUENTE_TITULO)
+        f = open("record.txt", "w")
+        f.write(str(self.puntos))
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido
