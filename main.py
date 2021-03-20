@@ -2,18 +2,17 @@ from tkinter import Tk, Canvas
 from random import randint
 from time import sleep
 from math import sqrt
-
 from burbuja import Burbuja, BURBUJA_PROBABILIDAD
 from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA, TITULO, FONDO
 from marcador import Marcador
 from submarino import Submarino, SUBMARINO_DISTANCIA_PASO
 from torpedo import Torpedo
+from escudo import Escudo
 
 
 def colision(objeto1, objeto2):
     distancia = sqrt((objeto2.x - objeto1.x) ** 2 + (objeto2.y - objeto1.y) ** 2)
     return distancia < objeto1.radio + objeto2.radio
-
 
 class Cazaburbujas:
     def __init__(self, canvas):
@@ -22,6 +21,7 @@ class Cazaburbujas:
         self.burbujas = list()
         self.num_burbujas = 0
         self.torpedo = Torpedo(canvas)
+        self.escudo = Escudo(canvas)
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(canvas, self.num_burbujas)
@@ -60,12 +60,28 @@ class Cazaburbujas:
         colisiones = self.detectar_colisiones()
         self.marcador.puntos += colisiones
         self.marcador.tiempo_fin += 10 * colisiones
+        num_escudos = self.detectar_escudo_activo()
+        self.marcador.escudos += num_escudos
         self.torpedo.mover()
         impacto_detectado = self.detectar_impacto_con_torpedo()
+        self.escudo.mover()
+
         if impacto_detectado:
             print("Submarino tocado")
             self.torpedo.detonar()
+            self.marcador.escudos -= 2
+
+        if self.marcador.escudos < 0:
             self.marcador.registrar_impacto_con_torpedo()
+
+    def detectar_escudo_activo(self):
+        num_escudos = 0
+        if self.escudo.activo and colision(self.submarino, self.escudo):
+            self.escudo.activar()
+            print("Escudo activado")
+            num_escudos += 1
+        return num_escudos
+
 
     def detectar_impacto_con_torpedo(self):
         return self.torpedo.activo and colision(self.submarino, self.torpedo)
@@ -75,7 +91,6 @@ class Cazaburbujas:
         for burbuja in self.burbujas:
             if burbuja.activa and colision(self.submarino, burbuja):
                 burbuja.explotar()
-
                 print("Burbuja explotada")
                 colisiones += 1
         return colisiones
@@ -85,7 +100,6 @@ ventana = Tk()
 ventana.title(TITULO)
 canvas = Canvas(ventana, width=CANVAS_ANCHURA, heigh=CANVAS_ALTURA, bg=FONDO)
 canvas.pack()
-
 cazaburbujas = Cazaburbujas(canvas)
 canvas.bind_all("<Key>", cazaburbujas.reaccionar_a_tecla_pulsada)
 
