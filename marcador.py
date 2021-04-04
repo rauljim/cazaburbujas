@@ -55,7 +55,7 @@ class Marcador:
 
         self.canvas.create_text(configuracion.CENTRO_X, posicion_y, text=texto_record, fill="white",
                                 font=FUENTE_TITULO)
-
+        self.canvas.itemconfig(self.texto_escudos, text=str(self.escudos))
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido

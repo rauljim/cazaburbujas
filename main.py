@@ -82,8 +82,8 @@ class Cazaburbujas:
             num_escudos += 1
         return num_escudos
 
-
     def detectar_impacto_con_torpedo(self):
+
         return self.torpedo.activo and colision(self.submarino, self.torpedo)
 
     def detectar_colisiones(self):
