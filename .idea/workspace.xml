@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="71aff01b-c838-44ac-b7a4-57f3e1a2e9c5" name="Default Changelist" comment="">
+    <list default="true" id="71aff01b-c838-44ac-b7a4-57f3e1a2e9c5" name="Default Changelist" comment="Guardar una puntuacion en un fichero">
+      <change afterPath="$PROJECT_DIR$/escudo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/escudo.py" beforeDir="false" afterPath="$PROJECT_DIR$/escudo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -103,6 +104,21 @@
       <option name="presentableId" value="Default" />
       <updated>1614501175276</updated>
     </task>
+    <task id="LOCAL-00001" summary="Terminar de añadir escudos">
+      <created>1615753817571</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615753817576</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Guardar una puntuacion en un fichero">
+      <created>1615755627279</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615755627281</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -116,5 +132,21 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Terminar de añadir escudos" />
+    <MESSAGE value="Guardar una puntuacion en un fichero" />
+    <option name="LAST_COMMIT_MESSAGE" value="Guardar una puntuacion en un fichero" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/marcador.py</url>
+          <line>47</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

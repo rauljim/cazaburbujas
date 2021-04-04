@@ -1,5 +1,6 @@
 from random import randint
 
+
 from configuracion import CANVAS_ALTURA
 
 ESCUDO_RADIO = 10
