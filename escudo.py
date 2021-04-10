@@ -49,3 +49,6 @@ class Escudo:
 
     def activar(self):
         self.desactivar()
+        
+    def activar(self):
+        self.desactivar()
