@@ -41,8 +41,9 @@ class Cazaburbujas:
             del self.burbujas[0]
 
     def reaccionar_a_tecla_pulsada(self, evento):
-        if self.marcador.has_perdido():
+        if self.marcador.has_perdido() and evento.keysym == 'space':
             self.reiniciar_partida()
+        if self.marcador.has_perdido():
             return
         if evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)

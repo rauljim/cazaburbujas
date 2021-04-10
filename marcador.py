@@ -2,7 +2,7 @@ from time import time
 from tkinter import font
 import configuracion
 
-TEXTO_REINICIAR = "Pulsa una tecla para seguir jugando"
+TEXTO_REINICIAR = "Pulsa espacio para seguir jugando"
 
 class Marcador:
     def __init__(self, canvas):

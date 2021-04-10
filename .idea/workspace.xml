@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="71aff01b-c838-44ac-b7a4-57f3e1a2e9c5" name="Default Changelist" comment="limpiar pantalla y reiniciar partida">
+    <list default="true" id="71aff01b-c838-44ac-b7a4-57f3e1a2e9c5" name="Default Changelist" comment="Mostrar mensaje para reiniciar la partida">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/marcador.py" beforeDir="false" afterPath="$PROJECT_DIR$/marcador.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618043963497</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Mostrar mensaje para reiniciar la partida">
+      <created>1618045083084</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1618045083086</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -128,6 +135,7 @@
     <MESSAGE value="Guardar una puntuacion en un fichero" />
     <MESSAGE value="Registar puntuacion y record en la pantalla" />
     <MESSAGE value="limpiar pantalla y reiniciar partida" />
-    <option name="LAST_COMMIT_MESSAGE" value="limpiar pantalla y reiniciar partida" />
+    <MESSAGE value="Mostrar mensaje para reiniciar la partida" />
+    <option name="LAST_COMMIT_MESSAGE" value="Mostrar mensaje para reiniciar la partida" />
   </component>
 </project>
