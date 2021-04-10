@@ -8,6 +8,7 @@ from marcador import Marcador
 from submarino import Submarino, SUBMARINO_DISTANCIA_PASO
 from torpedo import Torpedo
 from escudo import Escudo
+from menu import Menu
 
 
 def colision(objeto1, objeto2):
