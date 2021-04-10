@@ -30,6 +30,9 @@ class Torpedo:
                 self.x = TORPEDO_X_INICIAL
                 self.y = randint(0, CANVAS_ALTURA)
                 self.activo = True
+                self.circulo = self.canvas.create_oval(self.x - self.radio, self.y - self.radio,
+                                                       self.x + self.radio, self.y + self.radio,
+                                                       fill=TORPEDO_COLOR)
             else:
                 return
         self.x -= self.velocidad
@@ -41,6 +44,7 @@ class Torpedo:
     def desactivar(self):
         print('desactivando torpedo')
         self.activo = False
+        self.canvas.delete(self.circulo)
 
     def detonar(self):
         self.desactivar()
