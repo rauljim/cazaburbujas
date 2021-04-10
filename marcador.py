@@ -2,7 +2,7 @@ from time import time
 from tkinter import font
 import configuracion
 
-
+TEXTO_REINICIAR = "Pulsa una tecla para seguir jugando"
 
 class Marcador:
     def __init__(self, canvas):
@@ -33,12 +33,15 @@ class Marcador:
 
     def mostrar_has_perdido(self):
         FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
+        FUENTE_NORMAL = font.Font(family='Helvetica', size=20, weight='bold')
+
         if self.final_mostrado:
             return
         self.final_mostrado = True
         texto_puntuacion = f"{self.puntos} puntos "
-        self.objetos_canvas.append(self.canvas.create_text(configuracion.CENTRO_X, configuracion.CENTRO_Y, text=texto_puntuacion, fill="white",
-                                font=FUENTE_TITULO))
+        self.objetos_canvas.append(
+            self.canvas.create_text(configuracion.CENTRO_X, configuracion.CENTRO_Y, text=texto_puntuacion, fill="white",
+                                    font=FUENTE_TITULO))
         f = open("record.txt", "r")
         linea = f.readline()
         try:
@@ -52,9 +55,11 @@ class Marcador:
         else:
             texto_record = f"record {maxima_puntuacion}"
         posicion_y = configuracion.CENTRO_Y + 70
-        self.objetos_canvas.append( self.canvas.create_text(configuracion.CENTRO_X, posicion_y, text=texto_record, fill="white",
-                                font=FUENTE_TITULO))
-        FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
+        self.objetos_canvas.append(
+            self.canvas.create_text(configuracion.CENTRO_X, posicion_y, text=texto_record, fill="white",
+                                    font=FUENTE_TITULO))
+        self.objetos_canvas.append(self.canvas.create_text(400, 450, text=TEXTO_REINICIAR, fill="white",
+                                                           font=FUENTE_NORMAL))
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido
