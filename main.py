@@ -14,17 +14,20 @@ def colision(objeto1, objeto2):
     distancia = sqrt((objeto2.x - objeto1.x) ** 2 + (objeto2.y - objeto1.y) ** 2)
     return distancia < objeto1.radio + objeto2.radio
 
+
 class Cazaburbujas:
     def __init__(self, canvas):
+        self.canvas = canvas
         self.marcador = Marcador(canvas)
         self.submarino = Submarino(canvas)
         self.burbujas = list()
+        self.partida_activa = True
         self.num_burbujas = 0
         self.torpedo = Torpedo(canvas)
         self.escudo = Escudo(canvas)
 
     def crear_burbuja(self):
-        nueva_burbuja = Burbuja(canvas, self.num_burbujas)
+        nueva_burbuja = Burbuja(self.canvas, self.num_burbujas)
         self.num_burbujas += 1
         self.burbujas.append(nueva_burbuja)
 
@@ -38,6 +41,8 @@ class Cazaburbujas:
             del self.burbujas[0]
 
     def reaccionar_a_tecla_pulsada(self, evento):
+        if self.marcador.has_perdido() and evento.keysym == 'space':
+            self.reiniciar_partida()
         if self.marcador.has_perdido():
             return
         if evento.keysym == 'Up':
@@ -95,15 +100,32 @@ class Cazaburbujas:
                 colisiones += 1
         return colisiones
 
+    def reiniciar_partida(self):
+        self.partida_activa = False
+        self.borrar_pantalla()
+        iniciar_partida()
+
+    def borrar_pantalla(self):
+        for burbuja in self.burbujas:
+            burbuja.desactivar()
+        self.escudo.desactivar()
+        self.marcador.borrar_pantalla()
+        self.submarino.borrar()
+        self.torpedo.desactivar()
+        ventana.update()
+
+
+def iniciar_partida():
+    cazaburbujas = Cazaburbujas(canvas)
+    canvas.bind_all("<Key>", cazaburbujas.reaccionar_a_tecla_pulsada)
+    while cazaburbujas.partida_activa:
+        cazaburbujas.siguiente_paso()
+        ventana.update()
+        sleep(0.1)
+
 
 ventana = Tk()
 ventana.title(TITULO)
 canvas = Canvas(ventana, width=CANVAS_ANCHURA, heigh=CANVAS_ALTURA, bg=FONDO)
 canvas.pack()
-cazaburbujas = Cazaburbujas(canvas)
-canvas.bind_all("<Key>", cazaburbujas.reaccionar_a_tecla_pulsada)
-
-while True:
-    cazaburbujas.siguiente_paso()
-    ventana.update()
-    sleep(0.1)
+iniciar_partida()

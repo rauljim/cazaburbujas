@@ -27,3 +27,7 @@ class Submarino:
 
         self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
         self.canvas.moveto(self.circulo, self.x, self.y)
+
+    def borrar(self):
+        self.canvas.delete(self.triangulo)
+        self.canvas.delete(self.circulo)

@@ -30,6 +30,9 @@ class Escudo:
                 # Regenarar escudo
                 self.x = randint(0, CANVAS_ALTURA)
                 self.y = ESCUDO_Y_INICIAL
+                self.circulo = self.canvas.create_oval(self.x - self.radio, self.y - self.radio,
+                                          self.x + self.radio, self.y + self.radio,
+                                          fill=ESCUDO_COLOR)
                 self.activo = True
             else:
                 return
@@ -42,6 +45,10 @@ class Escudo:
     def desactivar(self):
         print('desactivando escudo')
         self.activo = False
+        self.canvas.delete(self.circulo)
 
+    def activar(self):
+        self.desactivar()
+        
     def activar(self):
         self.desactivar()
