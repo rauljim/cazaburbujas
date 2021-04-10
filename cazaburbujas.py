@@ -1,6 +1,5 @@
 from math import sqrt
 from random import randint
-from time import sleep
 
 from burbuja import Burbuja, BURBUJA_PROBABILIDAD
 from escudo import Escudo
@@ -42,7 +41,8 @@ class Cazaburbujas:
 
     def reaccionar_a_tecla_pulsada(self, evento):
         if self.marcador.has_perdido() and evento.keysym == 'space':
-            self.reiniciar_partida()
+            self.borrar_pantalla()
+            return True
         if self.marcador.has_perdido():
             return
         if evento.keysym == 'Up':
@@ -104,7 +104,6 @@ class Cazaburbujas:
         self.partida_activa = False
         self.borrar_pantalla()
 
-
     def borrar_pantalla(self):
         for burbuja in self.burbujas:
             burbuja.desactivar()
@@ -113,9 +112,3 @@ class Cazaburbujas:
         self.submarino.borrar()
         self.torpedo.desactivar()
         self.ventana.update()
-
-
-
-
-
-

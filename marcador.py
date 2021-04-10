@@ -2,7 +2,8 @@ from time import time
 from tkinter import font
 import configuracion
 
-TEXTO_REINICIAR = "Pulsa espacio para seguir jugando"
+TEXTO_REINICIAR = "Pulsa espacio para regresar al menu principal"
+
 
 class Marcador:
     def __init__(self, canvas):
@@ -32,8 +33,8 @@ class Marcador:
         self.canvas.itemconfig(self.texto_escudos, text=str(int(self.escudos)))
 
     def mostrar_has_perdido(self):
-        FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
-        FUENTE_NORMAL = font.Font(family='Helvetica', size=20, weight='bold')
+        fuente_titulo = font.Font(family='Helvetica', size=36, weight='bold')
+        fuente_normal = font.Font(family='Helvetica', size=20, weight='bold')
 
         if self.final_mostrado:
             return
@@ -41,12 +42,12 @@ class Marcador:
         texto_puntuacion = f"{self.puntos} puntos "
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, configuracion.CENTRO_Y, text=texto_puntuacion, fill="white",
-                                    font=FUENTE_TITULO))
+                                    font=fuente_titulo))
         f = open("record.txt", "r")
         linea = f.readline()
         try:
             maxima_puntuacion = int(linea)
-        except:
+        except IOError:
             maxima_puntuacion = 0
         if self.puntos > maxima_puntuacion:
             texto_record = "nuevo record"
@@ -57,9 +58,9 @@ class Marcador:
         posicion_y = configuracion.CENTRO_Y + 70
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, posicion_y, text=texto_record, fill="white",
-                                    font=FUENTE_TITULO))
+                                    font=fuente_titulo))
         self.objetos_canvas.append(self.canvas.create_text(400, 450, text=TEXTO_REINICIAR, fill="white",
-                                                           font=FUENTE_NORMAL))
+                                                           font=fuente_normal))
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido
