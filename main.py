@@ -40,6 +40,7 @@ class Main:
             time.sleep(0.1)
             self.siguiente_paso()
             self.ventana.update()
+        self.ventana.destroy()
 
     def siguiente_paso(self):
         if self.cazaburbujas:
