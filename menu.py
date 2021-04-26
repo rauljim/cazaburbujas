@@ -13,7 +13,6 @@ SALIR_Y = 350
 INICIAR_Y = 450
 
 
-
 class Menu:
     def __init__(self, ventana, canvas):
         self.FUENTE_TITULO = font.Font(family='Helvetica', size=36, weight='bold')
@@ -22,8 +21,7 @@ class Menu:
         self.canvas = canvas
         self.activo = True
         self.objetos_canvas = list()
-
-
+        self.nivel_seleccionado = 1
 
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, TITULO_Y, text=TEXTO_TITULO, fill="white",
@@ -31,7 +29,7 @@ class Menu:
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, NIVEL_Y, text=TEXTO_NIVEL, fill="white",
                                     font=self.FUENTE_NORMAL))
-        self.mostrar_nivel(1)
+        self.mostrar_nivel()
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, INICIAR_Y, text=TEXTO_INICIAR, fill="white",
                                     font=self.FUENTE_NORMAL))
@@ -62,21 +60,19 @@ class Menu:
             self.borrar_pantalla()
             return True
         elif evento.keysym == '1':
-            self.mostrar_nivel(1)
-            self.seleccionar_nivel(1)
+            self.nivel_seleccionado = 1
+            self.mostrar_nivel()
         elif evento.keysym == '2':
-            self.mostrar_nivel(2)
-            self.seleccionar_nivel(2)
+            self.nivel_seleccionado = 2
+            self.mostrar_nivel()
         elif evento.keysym == '3':
-            self.mostrar_nivel(3)
-            self.seleccionar_nivel(3)
+            self.nivel_seleccionado = 3
+            self.mostrar_nivel()
 
-
-
-    def mostrar_nivel(self, nivel):
-        color_1 = "red" if nivel == 1 else "white"
-        color_2 = "red" if nivel == 2 else "white"
-        color_3 = "red" if nivel == 3 else "white"
+    def mostrar_nivel(self):
+        color_1 = "red" if self.nivel_seleccionado == 1 else "white"
+        color_2 = "red" if self.nivel_seleccionado == 2 else "white"
+        color_3 = "red" if self.nivel_seleccionado == 3 else "white"
 
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X + 150, NIVEL_Y, text="1", fill=color_1,

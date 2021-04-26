@@ -14,9 +14,10 @@ def colision(objeto1, objeto2):
 
 
 class Cazaburbujas:
-    def __init__(self, ventana, canvas):
+    def __init__(self, ventana, canvas, nivel):
         self.ventana = ventana
         self.canvas = canvas
+        self.nivel = nivel
         self.marcador = Marcador(canvas)
         self.submarino = Submarino(canvas)
         self.burbujas = list()
