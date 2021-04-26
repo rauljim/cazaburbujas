@@ -27,7 +27,7 @@ class Cazaburbujas:
         self.escudo = Escudo(canvas)
 
     def crear_burbuja(self):
-        nueva_burbuja = Burbuja(self.canvas, self.num_burbujas)
+        nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)
         self.num_burbujas += 1
         self.burbujas.append(nueva_burbuja)
 

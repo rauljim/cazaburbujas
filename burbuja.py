@@ -12,7 +12,7 @@ BURBUJA_X_INICIAL = CANVAS_ANCHURA + MARGEN
 
 
 class Burbuja:
-    def __init__(self, canvas, id):
+    def __init__(self, canvas, id, nivel):
         print('creando', id)
         self.canvas = canvas
         self.id = id
@@ -22,7 +22,13 @@ class Burbuja:
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           outline=BURBUJA_COLOR)
-        self.velocidad = randint(1, MAX_BURBUJA_VELOCIDAD)
+        if nivel == 1:
+            velocidad_maxima = MAX_BURBUJA_VELOCIDAD / 2
+        elif nivel == 2:
+            velocidad_maxima = MAX_BURBUJA_VELOCIDAD
+        elif nivel == 3:
+            velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 2
+        self.velocidad = randint(10, velocidad_maxima)
         self.activa = True
 
     def mover(self):
@@ -41,3 +47,5 @@ class Burbuja:
 
     def explotar(self):
         self.desactivar()
+
+
