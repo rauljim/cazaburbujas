@@ -4,6 +4,7 @@ from tkinter import Tk, Canvas
 from cazaburbujas import Cazaburbujas
 from configuracion import TITULO, CANVAS_ANCHURA, CANVAS_ALTURA, FONDO
 from menu import Menu
+from torpedo import Torpedo
 
 
 class Main:
@@ -27,8 +28,9 @@ class Main:
             ir_a_menu = self.cazaburbujas.reaccionar_a_tecla_pulsada(evento)
 
         if comenzar_juego:
+            nivel = self.menu.nivel_seleccionado
+            self.cazaburbujas = Cazaburbujas(self.ventana, self.canvas, nivel)
             self.menu = None
-            self.cazaburbujas = Cazaburbujas(self.ventana, self.canvas)
         if ir_a_menu:
             self.cazaburbujas = None
             self.menu = Menu(self.ventana, self.canvas)

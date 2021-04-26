@@ -14,9 +14,10 @@ def colision(objeto1, objeto2):
 
 
 class Cazaburbujas:
-    def __init__(self, ventana, canvas):
+    def __init__(self, ventana, canvas, nivel):
         self.ventana = ventana
         self.canvas = canvas
+        self.nivel = nivel
         self.marcador = Marcador(canvas)
         self.submarino = Submarino(canvas)
         self.burbujas = list()
@@ -26,7 +27,7 @@ class Cazaburbujas:
         self.escudo = Escudo(canvas)
 
     def crear_burbuja(self):
-        nueva_burbuja = Burbuja(self.canvas, self.num_burbujas)
+        nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)
         self.num_burbujas += 1
         self.burbujas.append(nueva_burbuja)
 
@@ -45,7 +46,11 @@ class Cazaburbujas:
             return True
         if self.marcador.has_perdido():
             return
-        if evento.keysym == 'Up':
+        if evento.keysym == 'F1':
+            self.borrar_pantalla()
+            return True
+
+        elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
             self.submarino.mover_en_canvas(0, SUBMARINO_DISTANCIA_PASO)
@@ -64,7 +69,7 @@ class Cazaburbujas:
         self.limpiar_burbujas()
         colisiones = self.detectar_colisiones()
         self.marcador.puntos += colisiones
-        self.marcador.tiempo_fin += 10 * colisiones
+        self.marcador.tiempo_fin += 5 * colisiones
         num_escudos = self.detectar_escudo_activo()
         self.marcador.escudos += num_escudos
         self.torpedo.mover()
@@ -112,3 +117,4 @@ class Cazaburbujas:
         self.submarino.borrar()
         self.torpedo.desactivar()
         self.ventana.update()
+
