@@ -4,6 +4,7 @@ from tkinter import Tk, Canvas
 from cazaburbujas import Cazaburbujas
 from configuracion import TITULO, CANVAS_ANCHURA, CANVAS_ALTURA, FONDO
 from menu import Menu
+from torpedo import Torpedo
 
 
 class Main:

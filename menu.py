@@ -1,6 +1,7 @@
 from tkinter import font
 
 import configuracion
+import torpedo
 
 TEXTO_TITULO = "CAZABURBUJAS"
 TEXTO_INICIAR = "Pulsa ESPACIO para jugar o ESC para salir"
@@ -31,6 +32,7 @@ class Menu:
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, INICIAR_Y, text=TEXTO_INICIAR, fill="white",
                                     font=FUENTE_NORMAL))
+
         f = open("record.txt", "r")
         linea = f.readline()
         try:
@@ -41,6 +43,9 @@ class Menu:
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, RECORD_Y, text=texto_record, fill="white",
                                     font=FUENTE_NORMAL))
+
+    def seleccionar_nivel(self, nivel):
+        pass
 
     def borrar_pantalla(self):
         for objeto_canvas in self.objetos_canvas:
@@ -53,4 +58,10 @@ class Menu:
             return
         if evento.keysym == 'space':
             self.borrar_pantalla()
+            return True
+        if evento.keysym == '1':
+            self.seleccionar_nivel(1)
+            return True
+        if evento.keysym == '2':
+            self.seleccionar_nivel(2)
             return True

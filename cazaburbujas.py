@@ -45,7 +45,11 @@ class Cazaburbujas:
             return True
         if self.marcador.has_perdido():
             return
-        if evento.keysym == 'Up':
+        if evento.keysym == 'F1':
+            self.borrar_pantalla()
+            return True
+
+        elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
             self.submarino.mover_en_canvas(0, SUBMARINO_DISTANCIA_PASO)
@@ -64,7 +68,7 @@ class Cazaburbujas:
         self.limpiar_burbujas()
         colisiones = self.detectar_colisiones()
         self.marcador.puntos += colisiones
-        self.marcador.tiempo_fin += 10 * colisiones
+        self.marcador.tiempo_fin += 5 * colisiones
         num_escudos = self.detectar_escudo_activo()
         self.marcador.escudos += num_escudos
         self.torpedo.mover()
@@ -112,3 +116,4 @@ class Cazaburbujas:
         self.submarino.borrar()
         self.torpedo.desactivar()
         self.ventana.update()
+
