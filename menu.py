@@ -58,24 +58,32 @@ class Menu:
     def reaccionar_a_tecla_pulsada(self, evento):
         if evento.keysym == 'Escape':
             self.activo = False
-            return
-        if evento.keysym == 'space':
+        elif evento.keysym == 'space':
             self.borrar_pantalla()
             return True
-        if evento.keysym == '1':
+        elif evento.keysym == '1':
+            self.mostrar_nivel(1)
             self.seleccionar_nivel(1)
-            return True
-        if evento.keysym == '2':
+        elif evento.keysym == '2':
+            self.mostrar_nivel(2)
             self.seleccionar_nivel(2)
-            return True
+        elif evento.keysym == '3':
+            self.mostrar_nivel(3)
+            self.seleccionar_nivel(3)
+
+
 
     def mostrar_nivel(self, nivel):
+        color_1 = "red" if nivel == 1 else "white"
+        color_2 = "red" if nivel == 2 else "white"
+        color_3 = "red" if nivel == 3 else "white"
+
         self.objetos_canvas.append(
-            self.canvas.create_text(configuracion.CENTRO_X + 150, NIVEL_Y, text="1", fill="white",
+            self.canvas.create_text(configuracion.CENTRO_X + 150, NIVEL_Y, text="1", fill=color_1,
                                     font=self.FUENTE_NORMAL))
         self.objetos_canvas.append(
-            self.canvas.create_text(configuracion.CENTRO_X + 180, NIVEL_Y, text="2", fill="white",
+            self.canvas.create_text(configuracion.CENTRO_X + 180, NIVEL_Y, text="2", fill=color_2,
                                     font=self.FUENTE_NORMAL))
         self.objetos_canvas.append(
-            self.canvas.create_text(configuracion.CENTRO_X + 210, NIVEL_Y, text="3", fill="white",
+            self.canvas.create_text(configuracion.CENTRO_X + 210, NIVEL_Y, text="3", fill=color_3,
                                     font=self.FUENTE_NORMAL))
