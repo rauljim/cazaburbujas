@@ -23,8 +23,8 @@ class Cazaburbujas:
         self.burbujas = list()
         self.partida_activa = True
         self.num_burbujas = 0
-        self.torpedo = Torpedo(canvas)
-        self.escudo = Escudo(canvas)
+        self.torpedo = Torpedo(canvas, nivel)
+        self.escudo = Escudo(canvas, nivel)
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)

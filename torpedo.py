@@ -3,7 +3,7 @@ from random import randint
 from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA
 
 TORPEDO_RADIO = 10
-MAX_TORPEDO_VELOCIDAD = 30
+MAX_TORPEDO_VELOCIDAD = 26
 TORPEDO_COLOR = 'red'
 TORPEDO_PROBABILIDAD = 10
 MARGEN = TORPEDO_RADIO
@@ -11,7 +11,7 @@ TORPEDO_X_INICIAL = CANVAS_ANCHURA + MARGEN
 
 
 class Torpedo:
-    def __init__(self, canvas):
+    def __init__(self, canvas, nivel):
         print('creando torpedo')
         self.canvas = canvas
         self.x = TORPEDO_X_INICIAL
@@ -20,7 +20,17 @@ class Torpedo:
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           fill=TORPEDO_COLOR)
-        self.velocidad = randint(20, MAX_TORPEDO_VELOCIDAD)
+        if nivel == 1:
+            velocidad_maxima = MAX_TORPEDO_VELOCIDAD / 2
+            self.escudo_probabilidad = TORPEDO_PROBABILIDAD * 3
+            self.velocidad = randint(7, velocidad_maxima)
+        elif nivel == 2:
+            velocidad_maxima = MAX_TORPEDO_VELOCIDAD
+            self.escudo_probabilidad = TORPEDO_PROBABILIDAD * 2
+            self.velocidad = randint(20, velocidad_maxima)
+        elif nivel == 3:
+            velocidad_maxima = MAX_TORPEDO_VELOCIDAD * 2
+            self.velocidad = randint(35, velocidad_maxima)
         self.activo = True
 
     def mover(self):

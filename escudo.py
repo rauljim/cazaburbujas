@@ -11,7 +11,7 @@ ESCUDO_Y_INICIAL = CANVAS_ALTURA - MARGEN
 
 
 class Escudo:
-    def __init__(self, canvas):
+    def __init__(self, canvas, nivel):
         print('creando escudo')
         self.canvas = canvas
         self.x = randint(0, CANVAS_ALTURA)
@@ -20,12 +20,23 @@ class Escudo:
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           fill=ESCUDO_COLOR)
-        self.velocidad = randint(14, MAX_ESCUDO_VELOCIDAD)
+        if nivel == 1:
+            velocidad_maxima = MAX_ESCUDO_VELOCIDAD / 2
+            self.escudo_probabilidad = ESCUDO_PROBABILIDAD
+            self.velocidad = randint(7, velocidad_maxima)
+        elif nivel == 2:
+            velocidad_maxima = MAX_ESCUDO_VELOCIDAD
+            self.escudo_probabilidad = ESCUDO_PROBABILIDAD * 2
+            self.velocidad = randint(14, velocidad_maxima)
+        elif nivel == 3:
+            velocidad_maxima = MAX_ESCUDO_VELOCIDAD * 2
+            self.escudo_probabilidad = ESCUDO_PROBABILIDAD * 6
+            self.velocidad = randint(25, velocidad_maxima)
         self.activo = True
 
     def mover(self):
         if not self.activo:
-            if randint(1, ESCUDO_PROBABILIDAD) == 1:
+            if randint(1, self.escudo_probabilidad) == 1:
                 # Regenarar escudo
                 self.x = randint(0, CANVAS_ALTURA)
                 self.y = ESCUDO_Y_INICIAL
