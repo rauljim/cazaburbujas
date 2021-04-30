@@ -45,9 +45,6 @@ class Menu:
             self.canvas.create_text(configuracion.CENTRO_X, RECORD_Y, text=texto_record, fill="white",
                                     font=self.FUENTE_NORMAL))
 
-    def seleccionar_nivel(self, nivel):
-        pass
-
     def borrar_pantalla(self):
         for objeto_canvas in self.objetos_canvas:
             self.canvas.delete(objeto_canvas)

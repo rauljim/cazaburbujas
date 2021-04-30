@@ -24,11 +24,14 @@ class Burbuja:
                                           outline=BURBUJA_COLOR)
         if nivel == 1:
             velocidad_maxima = MAX_BURBUJA_VELOCIDAD / 2
+            self.velocidad = randint(10, velocidad_maxima)
         elif nivel == 2:
             velocidad_maxima = MAX_BURBUJA_VELOCIDAD
+            self.velocidad = randint(15, velocidad_maxima)
         elif nivel == 3:
             velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 2
-        self.velocidad = randint(10, velocidad_maxima)
+            self.velocidad = randint(45, velocidad_maxima)
+
         self.activa = True
 
     def mover(self):
@@ -47,5 +50,6 @@ class Burbuja:
 
     def explotar(self):
         self.desactivar()
+
 
 

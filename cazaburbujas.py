@@ -18,11 +18,12 @@ class Cazaburbujas:
         self.ventana = ventana
         self.canvas = canvas
         self.nivel = nivel
-        self.marcador = Marcador(canvas)
+        self.marcador = Marcador(canvas, nivel)
         self.submarino = Submarino(canvas)
         self.burbujas = list()
         self.partida_activa = True
         self.num_burbujas = 0
+        self.burbuja = Burbuja
         self.torpedo = Torpedo(canvas, nivel)
         self.escudo = Escudo(canvas, nivel)
 
@@ -49,7 +50,6 @@ class Cazaburbujas:
         if evento.keysym == 'F1':
             self.borrar_pantalla()
             return True
-
         elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':

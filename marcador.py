@@ -6,7 +6,7 @@ TEXTO_REINICIAR = "Pulsa espacio para regresar al menu principal"
 
 
 class Marcador:
-    def __init__(self, canvas):
+    def __init__(self, canvas, nivel):
         self.canvas = canvas
         self.objetos_canvas = list()
         self.puntos = 0
@@ -21,6 +21,12 @@ class Marcador:
         self.texto_puntos = canvas.create_text(150, 50, fill="white")
         self.texto_escudos = canvas.create_text(770, 50, fill="white")
         self.objetos_canvas.extend((self.texto_tiempo, self.texto_puntos, self.texto_escudos))
+        if nivel == 1:
+            self.objetos_canvas.append(canvas.create_text(500, 30, text="NIVEL 1", fill="black"))
+        elif nivel == 2:
+            self.objetos_canvas.append(canvas.create_text(500, 30, text="NIVEL 2", fill="black"))
+        elif nivel == 3:
+            self.objetos_canvas.append(canvas.create_text(500, 30, text="NIVEL 3", fill="black"))
         self.actualizar()
 
     def actualizar(self):
