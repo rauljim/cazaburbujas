@@ -33,8 +33,14 @@ class Escudo:
             self.escudo_probabilidad = ESCUDO_PROBABILIDAD * 6
             self.velocidad = randint(25, velocidad_maxima)
         self.activo = True
+        self.pausa = False
+
+    def paralizar(self):
+        self.pausa = True
 
     def mover(self):
+        if self.pausa:
+            return True
         if not self.activo:
             if randint(1, self.escudo_probabilidad) == 1:
                 # Regenarar escudo

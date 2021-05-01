@@ -32,8 +32,14 @@ class Torpedo:
             velocidad_maxima = MAX_TORPEDO_VELOCIDAD * 2
             self.velocidad = randint(35, velocidad_maxima)
         self.activo = True
+        self.pausa = False
+
+    def paralizar(self):
+        self.pausa = True
 
     def mover(self):
+        if self.pausa:
+            return
         if not self.activo:
             if randint(1, TORPEDO_PROBABILIDAD) == 1:
                 # Regenarar torpedo

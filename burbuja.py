@@ -31,11 +31,17 @@ class Burbuja:
         elif nivel == 3:
             velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 2
             self.velocidad = randint(45, velocidad_maxima)
-
         self.activa = True
+        self.pausa = False
+
+
+    def paralizar(self):
+        self.pausa = True
 
     def mover(self):
         if not self.activa:
+            return
+        if self.pausa:
             return
         self.x -= self.velocidad
         self.canvas.moveto(self.circulo, self.x, self.y)

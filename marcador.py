@@ -74,6 +74,10 @@ class Marcador:
     def registrar_impacto_con_torpedo(self):
         self.hundido = True
 
+    def mostrar_texto_pausa(self):
+        fuente_titulo = font.Font(family='Helvetica', size=36, weight='bold')
+        self.objetos_canvas.append(self.canvas.create_text(360, 40, text="PAUSA", fill="white", font=fuente_titulo))
+
     def borrar_pantalla(self):
         for objeto_canvas in self.objetos_canvas:
             self.canvas.delete(objeto_canvas)
