@@ -53,6 +53,16 @@ class Cazaburbujas:
         if evento.keysym == 'F1':
             self.borrar_pantalla()
             return True
+        elif evento.keysym == 'F9' and self.pausa:
+            self.pausa = False
+            self.torpedo.pausa = False
+            self.escudo.pausa = False
+            self.submarino.pausa = False
+            for burbuja in self.burbujas:
+                burbuja.pausa = False
+            self.marcador.borrar_texto_pausa()
+        elif evento.keysym == 'F9':
+            self.paralizar_objetos_canvas()
         elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
@@ -61,12 +71,6 @@ class Cazaburbujas:
             self.submarino.mover_en_canvas(-SUBMARINO_DISTANCIA_PASO, 0)
         elif evento.keysym == 'Right':
             self.submarino.mover_en_canvas(SUBMARINO_DISTANCIA_PASO, 0)
-        elif evento.keysym == 'F9':
-            self.paralizar_objetos_canvas()
-        elif evento.keysym == 'F9' and self.pausa:
-            print("ue")
-
-
 
     def siguiente_paso(self):
         self.marcador.actualizar()
@@ -133,6 +137,7 @@ class Cazaburbujas:
         self.marcador.mostrar_texto_pausa()
         self.escudo.paralizar()
         self.torpedo.paralizar()
+        self.submarino.paralizar()
         self.paralizar()
 
 

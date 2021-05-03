@@ -9,6 +9,7 @@ class Marcador:
     def __init__(self, canvas, nivel):
         self.canvas = canvas
         self.objetos_canvas = list()
+        self.textos_pausas = list()
         self.puntos = 0
         self.tiempo_fin = time() + 15
         self.hundido = False
@@ -76,8 +77,13 @@ class Marcador:
 
     def mostrar_texto_pausa(self):
         fuente_titulo = font.Font(family='Helvetica', size=36, weight='bold')
-        self.objetos_canvas.append(self.canvas.create_text(360, 40, text="PAUSA", fill="white", font=fuente_titulo))
+        self.textos_pausas.append(self.canvas.create_text(360, 40, text="PAUSA", fill="white", font=fuente_titulo))
+
+    def borrar_texto_pausa(self):
+        for texto_pausa in self.textos_pausas:
+            self.canvas.delete(texto_pausa)
 
     def borrar_pantalla(self):
         for objeto_canvas in self.objetos_canvas:
             self.canvas.delete(objeto_canvas)
+
