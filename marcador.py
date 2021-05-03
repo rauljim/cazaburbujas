@@ -15,6 +15,7 @@ class Marcador:
         self.hundido = False
         self.escudos = 0
         self.final_mostrado = False
+        self.pausa = False
         self.objetos_canvas.append(canvas.create_text(50, 30, text="TIEMPO", fill="white"))
         self.objetos_canvas.append(canvas.create_text(150, 30, text="PUNTOS", fill="white"))
         self.objetos_canvas.append(canvas.create_text(770, 30, text="ESCUDOS", fill="white"))
@@ -30,9 +31,13 @@ class Marcador:
             self.objetos_canvas.append(canvas.create_text(500, 30, text="NIVEL 3", fill="black"))
         self.actualizar()
 
+    def detener_marcador(self):
+        self.pausa = True
     def actualizar(self):
         if self.has_perdido():
             self.mostrar_has_perdido()
+            return
+        if self.pausa:
             return
         tiempo_restante = self.tiempo_fin - time()
         self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
