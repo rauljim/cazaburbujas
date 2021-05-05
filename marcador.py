@@ -31,8 +31,6 @@ class Marcador:
             self.objetos_canvas.append(canvas.create_text(500, 30, text="NIVEL 3", fill="black"))
         self.actualizar()
 
-    def detener_marcador(self):
-        self.pausa = True
     def actualizar(self):
         if self.has_perdido():
             self.mostrar_has_perdido()
@@ -76,6 +74,14 @@ class Marcador:
 
     def has_perdido(self):
         return time() > self.tiempo_fin or self.hundido
+
+    def pausar(self):
+        self.mostrar_texto_pausa()
+        self.pausa = True
+
+    def reanudar(self):
+        self.borrar_texto_pausa()
+        self.pausa = False
 
     def registrar_impacto_con_torpedo(self):
         self.hundido = True

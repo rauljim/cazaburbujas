@@ -18,8 +18,11 @@ class Submarino:
         self.canvas.moveto(self.circulo, self.x, self.y)
         self.pausa = False
 
-    def paralizar(self):
+    def pausar(self):
         self.pausa = True
+
+    def reanudar(self):
+        self.pausa = False
 
     def mover_en_canvas(self, movimiento_en_x, movimiento_en_y):
         if self.pausa:

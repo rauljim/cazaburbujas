@@ -35,8 +35,11 @@ class Burbuja:
         self.pausa = False
 
 
-    def paralizar(self):
+    def pausar(self):
         self.pausa = True
+
+    def reanudar(self):
+        self.pausa = False
 
     def mover(self):
         if not self.activa:

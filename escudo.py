@@ -35,8 +35,11 @@ class Escudo:
         self.activo = True
         self.pausa = False
 
-    def paralizar(self):
+    def pausar(self):
         self.pausa = True
+
+    def reanudar(self):
+        self.pausa = False
 
     def mover(self):
         if self.pausa:

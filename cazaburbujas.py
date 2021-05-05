@@ -27,8 +27,6 @@ class Cazaburbujas:
         self.torpedo = Torpedo(canvas, nivel)
         self.escudo = Escudo(canvas, nivel)
 
-    def paralizar(self):
-        self.pausa = True
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)
@@ -54,9 +52,9 @@ class Cazaburbujas:
             self.borrar_pantalla()
             return True
         elif evento.keysym == 'F9' and self.pausa:
-            self.dejar_de_paralizar_objetos_canvas()
+            self.reanudar()
         elif evento.keysym == 'F9':
-            self.paralizar_objetos_canvas()
+            self.pausar()
         elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
@@ -125,23 +123,22 @@ class Cazaburbujas:
         self.torpedo.desactivar()
         self.ventana.update()
 
-    def paralizar_objetos_canvas(self):
+    def pausar(self):
         for burbuja in self.burbujas:
-            burbuja.paralizar()
-        self.marcador.mostrar_texto_pausa()
-        self.marcador.detener_marcador()
-        self.escudo.paralizar()
-        self.torpedo.paralizar()
-        self.submarino.paralizar()
-        self.paralizar()
-    def dejar_de_paralizar_objetos_canvas(self):
+            burbuja.pausar()
+        self.torpedo.pausar()
+        self.escudo.pausar()
+        self.submarino.pausar()
+        self.marcador.pausar()
+        self.pausa = True
+
+    def reanudar(self):
+        for burbuja in self.burbujas:
+            burbuja.reanudar()
+        self.torpedo.reanudar()
+        self.escudo.reanudar()
+        self.submarino.reanudar()
+        self.marcador.reanudar()
         self.pausa = False
-        self.torpedo.pausa = False
-        self.escudo.pausa = False
-        self.submarino.pausa = False
-        self.marcador.pausa = False
-        for burbuja in self.burbujas:
-            burbuja.pausa = False
-        self.marcador.borrar_texto_pausa()
 
 
