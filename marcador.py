@@ -73,15 +73,19 @@ class Marcador:
                                                            font=fuente_normal))
 
     def has_perdido(self):
+        if self.pausa:
+            return False
         return time() > self.tiempo_fin or self.hundido
 
     def pausar(self):
         self.mostrar_texto_pausa()
         self.pausa = True
+        self.tiempo_restante_al_pausar = self.tiempo_fin - time()
 
     def reanudar(self):
         self.borrar_texto_pausa()
         self.pausa = False
+        self.tiempo_fin = time() + self.tiempo_restante_al_pausar
 
     def registrar_impacto_con_torpedo(self):
         self.hundido = True
