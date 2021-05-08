@@ -15,6 +15,7 @@ def colision(objeto1, objeto2):
 
 class Cazaburbujas:
     def __init__(self, ventana, canvas, nivel):
+        self.pausa = False
         self.ventana = ventana
         self.canvas = canvas
         self.nivel = nivel
@@ -23,9 +24,9 @@ class Cazaburbujas:
         self.burbujas = list()
         self.partida_activa = True
         self.num_burbujas = 0
-        self.burbuja = Burbuja
         self.torpedo = Torpedo(canvas, nivel)
         self.escudo = Escudo(canvas, nivel)
+
 
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)
@@ -50,6 +51,10 @@ class Cazaburbujas:
         if evento.keysym == 'F1':
             self.borrar_pantalla()
             return True
+        elif evento.keysym == 'F9' and self.pausa:
+            self.reanudar()
+        elif evento.keysym == 'F9':
+            self.pausar()
         elif evento.keysym == 'Up':
             self.submarino.mover_en_canvas(0, -SUBMARINO_DISTANCIA_PASO)
         elif evento.keysym == 'Down':
@@ -61,7 +66,7 @@ class Cazaburbujas:
 
     def siguiente_paso(self):
         self.marcador.actualizar()
-        if self.marcador.has_perdido():
+        if self.marcador.has_perdido() or self.pausa:
             return
         if randint(1, BURBUJA_PROBABILIDAD) == 1:
             self.crear_burbuja()
@@ -117,4 +122,23 @@ class Cazaburbujas:
         self.submarino.borrar()
         self.torpedo.desactivar()
         self.ventana.update()
+
+    def pausar(self):
+        for burbuja in self.burbujas:
+            burbuja.pausar()
+        self.torpedo.pausar()
+        self.escudo.pausar()
+        self.submarino.pausar()
+        self.marcador.pausar()
+        self.pausa = True
+
+    def reanudar(self):
+        for burbuja in self.burbujas:
+            burbuja.reanudar()
+        self.torpedo.reanudar()
+        self.escudo.reanudar()
+        self.submarino.reanudar()
+        self.marcador.reanudar()
+        self.pausa = False
+
 

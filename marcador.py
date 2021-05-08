@@ -14,6 +14,8 @@ class Marcador:
         self.hundido = False
         self.escudos = 0
         self.final_mostrado = False
+        self.pausa = False
+        self.texto_pausa = None
         self.objetos_canvas.append(canvas.create_text(50, 30, text="TIEMPO", fill="white"))
         self.objetos_canvas.append(canvas.create_text(150, 30, text="PUNTOS", fill="white"))
         self.objetos_canvas.append(canvas.create_text(770, 30, text="ESCUDOS", fill="white"))
@@ -32,6 +34,8 @@ class Marcador:
     def actualizar(self):
         if self.has_perdido():
             self.mostrar_has_perdido()
+            return
+        if self.pausa:
             return
         tiempo_restante = self.tiempo_fin - time()
         self.canvas.itemconfig(self.texto_tiempo, text=str(int(tiempo_restante)))
@@ -69,11 +73,36 @@ class Marcador:
                                                            font=fuente_normal))
 
     def has_perdido(self):
+        if self.pausa:
+            return False
         return time() > self.tiempo_fin or self.hundido
+
+    def pausar(self):
+        self.mostrar_texto_pausa()
+        self.pausa = True
+        self.tiempo_restante_al_pausar = self.tiempo_fin - time()
+
+    def reanudar(self):
+        self.borrar_texto_pausa()
+        self.pausa = False
+        self.tiempo_fin = time() + self.tiempo_restante_al_pausar
 
     def registrar_impacto_con_torpedo(self):
         self.hundido = True
 
+    def mostrar_texto_pausa(self):
+        if self.texto_pausa:
+            return
+        fuente_titulo = font.Font(family='Helvetica', size=36, weight='bold')
+        self.texto_pausa = self.canvas.create_text(360, 40, text="PAUSA", fill="white",
+                                                          font=fuente_titulo)
+
+    def borrar_texto_pausa(self):
+        if self.texto_pausa:
+            self.canvas.delete(self.texto_pausa)
+        self.texto_pausa = None
+
     def borrar_pantalla(self):
         for objeto_canvas in self.objetos_canvas:
             self.canvas.delete(objeto_canvas)
+        self.borrar_texto_pausa()

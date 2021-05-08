@@ -16,8 +16,17 @@ class Submarino:
         self.radio = SUBMARINO_RADIO
         self.canvas.moveto(self.triangulo, self.x + SUBMARINO_AJUSTE_TRIANGULO, self.y + SUBMARINO_AJUSTE_TRIANGULO)
         self.canvas.moveto(self.circulo, self.x, self.y)
+        self.pausa = False
+
+    def pausar(self):
+        self.pausa = True
+
+    def reanudar(self):
+        self.pausa = False
 
     def mover_en_canvas(self, movimiento_en_x, movimiento_en_y):
+        if self.pausa:
+            return
         x_modificada = self.x + movimiento_en_x
         y_modificada = self.y + movimiento_en_y
         if 0 <= x_modificada <= CANVAS_ANCHURA - SUBMARINO_RADIO * 2:
