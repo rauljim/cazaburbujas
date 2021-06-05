@@ -1,4 +1,5 @@
 from random import randint
+from time import time
 
 from configuracion import CANVAS_ALTURA
 
@@ -17,6 +18,8 @@ class Escudo:
         self.x = randint(0, CANVAS_ALTURA)
         self.y = ESCUDO_Y_INICIAL
         self.radio = ESCUDO_RADIO
+        self.comienzo_dificultad = time() + 20
+        self.cuenta_atras_aumento_dificultad = self.comienzo_dificultad - time()
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           fill=ESCUDO_COLOR)
@@ -32,6 +35,15 @@ class Escudo:
             velocidad_maxima = MAX_ESCUDO_VELOCIDAD * 2
             self.escudo_probabilidad = ESCUDO_PROBABILIDAD * 6
             self.velocidad = randint(25, velocidad_maxima)
+        self.tiempo_restante_dificultad = self.comienzo_dificultad - time()
+        if self.tiempo_restante_dificultad <= 0 and nivel == 1:
+            self.sumar_dificultades = self.num_variacion_dificultad = + 1
+            if self.sumar_dificultades:
+                print("aumentando velocidad")
+                velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 1.5
+                self.velocidad = randint(30, velocidad_maxima)
+                self.sumar_dificultades
+
         self.activo = True
         self.pausa = False
 

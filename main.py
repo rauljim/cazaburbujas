@@ -4,7 +4,6 @@ from tkinter import Tk, Canvas
 from cazaburbujas import Cazaburbujas
 from configuracion import TITULO, CANVAS_ANCHURA, CANVAS_ALTURA, FONDO
 from menu import Menu
-from torpedo import Torpedo
 
 
 class Main:
@@ -46,7 +45,6 @@ class Main:
     def siguiente_paso(self):
         if self.cazaburbujas:
             self.cazaburbujas.siguiente_paso()
-
 
 if __name__ == "__main__":
     Main().iniciar()

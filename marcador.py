@@ -1,5 +1,6 @@
 from time import time
 from tkinter import font
+
 import configuracion
 
 TEXTO_REINICIAR = "Pulsa espacio para regresar al menu principal"
@@ -96,7 +97,6 @@ class Marcador:
         fuente_titulo = font.Font(family='Helvetica', size=36, weight='bold')
         self.texto_pausa = self.canvas.create_text(360, 40, text="PAUSA", fill="white",
                                                           font=fuente_titulo)
-
     def borrar_texto_pausa(self):
         if self.texto_pausa:
             self.canvas.delete(self.texto_pausa)

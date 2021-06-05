@@ -1,4 +1,5 @@
 from random import randint
+from time import time
 
 from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA
 
@@ -19,6 +20,8 @@ class Burbuja:
         self.x = BURBUJA_X_INICIAL
         self.y = randint(0, CANVAS_ALTURA)
         self.radio = randint(MIN_BURBUJA_RADIO, MAX_BURBUJA_RADIO)
+        self.comienzo_dificultad = time() + 20
+        self.num_variacion_dificultad = 0
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           outline=BURBUJA_COLOR)
@@ -33,6 +36,14 @@ class Burbuja:
             self.velocidad = randint(45, velocidad_maxima)
         self.activa = True
         self.pausa = False
+        self.tiempo_restante_dificultad = self.comienzo_dificultad - time()
+        if self.tiempo_restante_dificultad <= 0 and nivel == 1:
+            self.sumar_dificultades = self.num_variacion_dificultad = + 1
+            if self.sumar_dificultades:
+                print("aumentando velocidad")
+                velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 1.5
+                self.velocidad = randint(30, velocidad_maxima)
+                self.sumar_dificultades
 
 
     def pausar(self):
@@ -59,6 +70,3 @@ class Burbuja:
 
     def explotar(self):
         self.desactivar()
-
-
-

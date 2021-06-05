@@ -2,6 +2,7 @@ from tkinter import font
 
 import configuracion
 import torpedo
+from cazaburbujas import Cazaburbujas
 
 TEXTO_TITULO = "CAZABURBUJAS"
 TEXTO_INICIAR = "Pulsa ESPACIO para jugar o ESC para salir"
@@ -33,6 +34,16 @@ class Menu:
         self.objetos_canvas.append(
             self.canvas.create_text(configuracion.CENTRO_X, INICIAR_Y, text=TEXTO_INICIAR, fill="white",
                                     font=self.FUENTE_NORMAL))
+
+        self.circulo = self.objetos_canvas.append(
+            self.canvas.create_oval(20, 20, 50, 50, outline="white"))
+
+        self.circulo = self.objetos_canvas.append(
+            self.canvas.create_oval(450, 450, 430, 430, outline="white"))
+
+        self.circulo = self.objetos_canvas.append(
+            self.canvas.create_oval(200, 200, 350, 50, outline="white"))
+
 
         f = open("record.txt", "r")
         linea = f.readline()

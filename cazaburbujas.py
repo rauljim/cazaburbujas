@@ -27,7 +27,6 @@ class Cazaburbujas:
         self.torpedo = Torpedo(canvas, nivel)
         self.escudo = Escudo(canvas, nivel)
 
-
     def crear_burbuja(self):
         nueva_burbuja = Burbuja(self.canvas, self.num_burbujas, self.nivel)
         self.num_burbujas += 1
@@ -140,5 +139,4 @@ class Cazaburbujas:
         self.submarino.reanudar()
         self.marcador.reanudar()
         self.pausa = False
-
 

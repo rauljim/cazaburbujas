@@ -1,4 +1,5 @@
 from random import randint
+from time import time
 
 from configuracion import CANVAS_ANCHURA, CANVAS_ALTURA
 
@@ -17,6 +18,7 @@ class Torpedo:
         self.x = TORPEDO_X_INICIAL
         self.y = randint(0, CANVAS_ALTURA)
         self.radio = TORPEDO_RADIO
+        self.comienzo_dificultad = time() + 20
         self.circulo = canvas.create_oval(self.x - self.radio, self.y - self.radio,
                                           self.x + self.radio, self.y + self.radio,
                                           fill=TORPEDO_COLOR)
@@ -33,7 +35,14 @@ class Torpedo:
             self.velocidad = randint(35, velocidad_maxima)
         self.activo = True
         self.pausa = False
-
+        self.tiempo_restante_dificultad = self.comienzo_dificultad - time()
+        if self.tiempo_restante_dificultad <= 0 and nivel == 1:
+            self.sumar_dificultades = self.num_variacion_dificultad = + 1
+            if self.sumar_dificultades:
+                print("aumentando velocidad")
+                velocidad_maxima = MAX_TORPEDO_VELOCIDAD * 1.5
+                self.velocidad = randint(30, velocidad_maxima)
+                self.sumar_dificultades
     def pausar(self):
         self.pausa = True
 
