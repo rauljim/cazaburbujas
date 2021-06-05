@@ -42,7 +42,7 @@ class Torpedo:
                 print("aumentando velocidad")
                 velocidad_maxima = MAX_TORPEDO_VELOCIDAD * 1.5
                 self.velocidad = randint(30, velocidad_maxima)
-                self.sumar_dificultades
+
     def pausar(self):
         self.pausa = True
 

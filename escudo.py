@@ -42,7 +42,6 @@ class Escudo:
                 print("aumentando velocidad")
                 velocidad_maxima = MAX_BURBUJA_VELOCIDAD * 1.5
                 self.velocidad = randint(30, velocidad_maxima)
-                self.sumar_dificultades
 
         self.activo = True
         self.pausa = False
